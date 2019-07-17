@@ -11,6 +11,11 @@ class AuthController extends Controller
 {
     public function signup(Request $request)
     {
+        if ($request->user()->role!='admin'){
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 401); 
+        }
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
@@ -20,7 +25,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'state' => 'offline',
-            'role' => 'admin',
+            'role' => 'supporter',
             'password' => bcrypt($request->password)
         ]);
         $user->save();
@@ -32,12 +37,6 @@ class AuthController extends Controller
     /**
      * Login user and create token
      *
-     * @param  [string] email
-     * @param  [string] password
-     * @param  [boolean] remember_me
-     * @return [string] access_token
-     * @return [string] token_type
-     * @return [string] expires_at
      */
     public function login(Request $request)
     {
@@ -68,8 +67,6 @@ class AuthController extends Controller
   
     /**
      * Logout user (Revoke the token)
-     *
-     * @return [string] message
      */
     public function logout(Request $request)
     {
@@ -82,7 +79,6 @@ class AuthController extends Controller
     /**
      * Get the authenticated User
      *
-     * @return [json] user object
      */
     public function user(Request $request)
     {

@@ -26,8 +26,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Passport::routes();
         //access token expired
-        Passport::tokensExpireIn(now()->addMinutes(1));
-        Passport::refreshTokensExpireIn(now()->addMinutes(1));
-        Passport::personalAccessTokensExpireIn(now()->addMinutes(1));
+        Passport::tokensExpireIn(now()->addMinutes(10));
+        Passport::refreshTokensExpireIn(now()->addMinutes(10));
+        Passport::personalAccessTokensExpireIn(now()->addMinutes(10));
     }
 }
