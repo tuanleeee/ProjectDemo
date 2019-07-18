@@ -5,22 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\SignUpRequest;
 use App\User;
 
 class AuthController extends Controller
 {
-    public function signup(Request $request)
+    public function signup(SignUpRequest $request)
     {
         if ($request->user()->role!='admin'){
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401); 
         }
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed'
-        ]);
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
@@ -38,13 +35,9 @@ class AuthController extends Controller
      * Login user and create token
      *
      */
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-            'remember_me' => 'boolean'
-        ]);
+        //this one for service level
         $credentials = request(['email', 'password']);
         if(!Auth::attempt($credentials))
             return response()->json([
