@@ -7,15 +7,15 @@ use Illuminate\Http\Request;
  */
 
 
-function () {
-            Route::group([
-              'middleware' => 'auth:api'
-            ], function() {
-                Route::post('signup', 'AuthController@signup');
-
-                
-                //user hasnt been modified yet
-                Route::get('user', 'AuthController@user');
-            
-            });
-        };
+Route::group([
+    'prefix' => 'admin'
+], function () {
+    
+  
+    Route::group([
+      'middleware' => 'auth:api'
+    ], function() {
+        Route::post('signup', 'AuthController@signup');
+        Route::get('user', 'AuthController@user');
+    });
+});

@@ -14,15 +14,3 @@ use Illuminate\Http\Request;
 */
 
 
-Route::group([
-    'prefix' => 'auth'
-], function () {
-    
-  
-    Route::group([
-      'middleware' => 'auth:api'
-    ], function() {
-        Route::post('signup', 'AuthController@signup');
-        Route::get('user', 'AuthController@user');
-    });
-});
