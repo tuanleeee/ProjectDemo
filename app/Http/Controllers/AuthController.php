@@ -11,7 +11,7 @@ use App\User;
 
 class AuthController extends Controller
 {
-    public function signup(SignUpRequest $request)
+    public function signup(Request $request)
     {
         if ($request->user()->role!='admin'){
             return response()->json([
@@ -19,10 +19,16 @@ class AuthController extends Controller
             ], 401); 
         }
         $user = new User([
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'middle_name' => $request->middle_name,
+            'last_name' => $request->last_name,
+            'date_of_birth' => $request->date_of_birth,
+            'gender' => $request->gender,
+            'phone' => $request->phone,
             'email' => $request->email,
-            'state' => 'offline',
-            'role' => 'supporter',
+            'address' => $request->address,
+            'username' => $request->username,
+            'user_role' => $request->user_role, 
             'password' => bcrypt($request->password)
         ]);
         $user->save();
