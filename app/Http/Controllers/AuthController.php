@@ -44,7 +44,8 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         //this one for service level
-        $credentials = request(['email', 'password']);
+        $credentials = request(['username', 'password']);
+        
         if(!Auth::attempt($credentials))
             return response()->json([
                 'message' => 'Unauthorized'
