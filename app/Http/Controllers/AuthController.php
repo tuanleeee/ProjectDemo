@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignUpRequest;
+use Intervention\Image\Facades\Image;
 use App\User;
 
 class AuthController extends Controller
@@ -19,9 +20,15 @@ class AuthController extends Controller
                 'message' => 'Unauthorized'
             ], 401); 
         }*/
+        $dimensionX = 60;
+        $dimensionY = 80;
+        $image_path = $request->image->store('public/avatars');
+        $split = explode("/",$image_path,2);
+        $image_path=$split[1];
+        $image = Image::make("storage/".$image_path)->fit($dimensionX,$dimensionY);
+        $image->save();
+
         
-        $image_path = $request->image->store('uploads','public');
-        //dd($image_path);
         $user = new User([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
