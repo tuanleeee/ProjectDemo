@@ -10,12 +10,12 @@ use Illuminate\Http\Request;
 Route::group([
     'prefix' => 'admin'
 ], function () {
-    
+    Route::post('signup', 'AuthController@signup');
   
     Route::group([
       'middleware' => 'auth:api'
     ], function() {
-        Route::post('signup', 'AuthController@signup');
+        
         Route::get('user', 'AuthController@user');
     });
 });

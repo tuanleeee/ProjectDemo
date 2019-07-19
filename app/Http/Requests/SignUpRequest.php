@@ -31,6 +31,7 @@ class SignUpRequest extends FormRequest
             'user_name' => ['string','required','unique'],
 
             'date_of_birth' => ['date','nullable'],
+            'image' => ['image','nullable'],
 
             'gender' => [Rule::in(['male','female']),'required'],
             'user_role' => [Rule::in(['admin','supporter']),'required'],

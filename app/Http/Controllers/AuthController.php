@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignUpRequest;
@@ -13,11 +14,14 @@ class AuthController extends Controller
 {
     public function signup(Request $request)
     {
-        if ($request->user()->role!='admin'){
+        /*if ($request->user()->role!='admin'){
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401); 
-        }
+        }*/
+        
+        $image_path = $request->image->store('uploads','public');
+        //dd($image_path);
         $user = new User([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
@@ -28,6 +32,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'address' => $request->address,
             'username' => $request->username,
+            'image' => "storage/".$image_path,
             'user_role' => $request->user_role, 
             'password' => bcrypt($request->password)
         ]);
@@ -82,7 +87,9 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
-
-        return response()->json(User::all());
+        if (Storage::disk('public')->exists($request->user()->image)){
+            $content = Storage::disk('public')->get($request->user()->image);
+        }
+        return response()->json($request->user());
     }
 }
