@@ -38,7 +38,7 @@ class SignUpRequest extends FormRequest
             
             //'phone' => ['regex:/(01)[0-9]{9}/','required'], having trouble with regex, test later
             'address' => ['string','nullable'],
-            'email' => 'required|string|email|unique:users',
+            'email' => 'required|string|email|unique',
             'password' => 'required|string|confirmed'
         ];
     }

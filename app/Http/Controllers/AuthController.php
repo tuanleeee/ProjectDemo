@@ -4,15 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignUpRequest;
-use Intervention\Image\Facades\Image;
+use App\Services\ImgServices;
+use App\Services\UserServices;
 use App\User;
 
 class AuthController extends Controller
 {
+    private $imgServices;
+    private $userServices;
+    public function __construct(ImgServices $imgServices,UserServices $userServices){
+        $this->imgServices = $imgServices;
+        $this->userServices = $userServices;
+    }
+
     public function signup(Request $request)
     {
         /*if ($request->user()->role!='admin'){
@@ -20,30 +27,13 @@ class AuthController extends Controller
                 'message' => 'Unauthorized'
             ], 401); 
         }*/
-        $dimensionX = 60;
-        $dimensionY = 80;
-        $image_path = $request->image->store('public/avatars');
-        $split = explode("/",$image_path,2);
-        $image_path=$split[1];
-        $image = Image::make("storage/".$image_path)->fit($dimensionX,$dimensionY);
-        $image->save();
 
+        $image_name=$request->username.'_'.time();
+
+        $this->imgServices->save_img($request->image,$image_name,"avatar",60,80);
         
-        $user = new User([
-            'first_name' => $request->first_name,
-            'middle_name' => $request->middle_name,
-            'last_name' => $request->last_name,
-            'date_of_birth' => $request->date_of_birth,
-            'gender' => $request->gender,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'address' => $request->address,
-            'username' => $request->username,
-            'image' => "storage/".$image_path,
-            'user_role' => $request->user_role, 
-            'password' => bcrypt($request->password)
-        ]);
-        $user->save();
+        $this->userServices->create_user($request->all(),$image_name);
+
         return response()->json([
             'message' => 'Successfully created user!'
         ], 201);
@@ -94,9 +84,9 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
-        if (Storage::disk('public')->exists($request->user()->image)){
+        /*if (Storage::disk('public')->exists($request->user()->image)){
             $content = Storage::disk('public')->get($request->user()->image);
-        }
+        }*/
         return response()->json($request->user());
     }
 }
