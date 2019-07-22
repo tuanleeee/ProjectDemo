@@ -41,5 +41,7 @@ class SignUpRequest extends FormRequest
             'email' => 'required|string|email|unique',
             'password' => 'required|string|confirmed'
         ];
+
+        
     }
 }
