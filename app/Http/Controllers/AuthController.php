@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignUpRequest;
+use App\Exceptions\UnauthorizedException;
 use App\Services\ImgServices;
 use App\Services\UserServices;
 use App\User;
@@ -49,9 +50,7 @@ class AuthController extends Controller
         $credentials = request(['username', 'password']);
         
         if(!Auth::attempt($credentials))
-            return response()->json([
-                'message' => 'Unauthorized'
-            ], 401);
+            throw new UnauthorizedException();
         $user = $request->user();
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
