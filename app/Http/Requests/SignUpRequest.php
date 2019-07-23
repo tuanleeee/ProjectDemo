@@ -44,4 +44,10 @@ class SignUpRequest extends FormRequest
 
         
     }
+    public function message(){
+        return ["username.required"=>"Username is required",
+                "email.required"=>"Email is required",
+                "password.required"=>"Password is required",
+                "user_role.required"=>"User role is required"];
+    }
 }
