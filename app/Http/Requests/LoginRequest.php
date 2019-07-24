@@ -3,6 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class LoginRequest extends FormRequest
 {
@@ -28,5 +32,23 @@ class LoginRequest extends FormRequest
             'password' => 'required|string',
             'remember_me' => 'boolean'
         ];
+    }
+
+    public function messages(){
+        return [
+            'username.required' => 'Username is required',
+            'password.required' => 'Password is required'
+        ];
+    }
+
+    protected function failedValidation(Validator $validator) 
+    {
+
+        $errors = (new ValidationException($validator))->errors();
+        throw new HttpResponseException(response()->json(
+            [
+                'error' => $errors,
+                'status_code' => 422,
+            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY));
     }
 }
