@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class SignUpRequest extends FormRequest
 {
@@ -28,7 +32,7 @@ class SignUpRequest extends FormRequest
             'first_name' => ['string','nullable'],
             'middle_name' => ['string','nullable'],
             'last_name' => ['string','nullable'],
-            'user_name' => ['string','required','unique'],
+            'user_name' => ['string','required','unique:users'],
 
             'date_of_birth' => ['date','nullable'],
             'image' => ['image','nullable'],
@@ -38,16 +42,21 @@ class SignUpRequest extends FormRequest
             
             //'phone' => ['regex:/(01)[0-9]{9}/','required'], having trouble with regex, test later
             'address' => ['string','nullable'],
-            'email' => 'required|string|email|unique',
+            'email' => 'required|string|email|unique:users',
             'password' => 'required|string|confirmed'
         ];
 
         
     }
-    public function message(){
-        return ["username.required"=>"Username is required",
-                "email.required"=>"Email is required",
-                "password.required"=>"Password is required",
-                "user_role.required"=>"User role is required"];
+
+    protected function failedValidation(Validator $validator) 
+    {
+
+        $errors = (new ValidationException($validator))->errors();
+        throw new HttpResponseException(response()->json(
+            [
+                'error' => $errors,
+                'status_code' => 422,
+            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

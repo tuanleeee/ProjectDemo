@@ -3,6 +3,7 @@ namespace App\Repository;
 
 use App\User;
 use Illuminate\Support\Collection;
+use App\Exceptions\NoUserFoundException;
 
 class UserRepository{
     public function save($user,$data){
@@ -12,6 +13,7 @@ class UserRepository{
         
         $user->save();
     }
+
     public function newUser(){
     	$user = new User(['first_name' => "",
 			  'middle_name' =>"",
@@ -21,5 +23,13 @@ class UserRepository{
 			  'address' => "",
 		          'image' => "noImage.jpeg"]);
     	return $user;
-    }    
+    }
+    
+    public function getUser($id){
+        $user = User::find($id);
+        if (!$user){
+            throw new NoUserFoundException();
+        }
+        return $user;
+    }
 }

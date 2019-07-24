@@ -34,13 +34,6 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    public function messages(){
-        return [
-            'username.required' => 'Username is required',
-            'password.required' => 'Password is required'
-        ];
-    }
-
     protected function failedValidation(Validator $validator) 
     {
 

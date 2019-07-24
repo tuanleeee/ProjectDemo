@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 Route::group([
     'prefix' => 'admin'
 ], function () {
+    Route::get('getUser/{id}','AdminController@getUser');
     Route::post('signup', 'AuthController@signup');
     Route::get('supporter_list','SupporterController@getOnlineList');
     Route::group([
