@@ -12,6 +12,8 @@ use App\Services\UserServices;
 use App\User;
 use vendor\laravel\passport\src;
 
+use Cache;
+use Illuminate\Support\Facades\Auth;
 use App\Exceptions\NotExistedTokenException;
 use Illuminate\Support\Collection;
 
@@ -61,10 +63,8 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        $request->user()->token()->revoke();
-        return response()->json([
-            'message' => 'Successfully logged out'
-        ]);
+        $message = $this->userServices->logout($request);
+        return $message;
     }
   
     /**

@@ -43,4 +43,12 @@ class UserServices{
             )->toDateTimeString()
         ]);
     }
+
+    public function logout($request){
+        $request->user()->token()->revoke();
+        Cache::pull('user-is-online-' . Auth::user()->id);
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]); 
+    }
 }
