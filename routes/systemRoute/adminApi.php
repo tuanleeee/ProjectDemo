@@ -11,7 +11,7 @@ Route::group([
     'prefix' => 'admin'
 ], function () {
     Route::post('signup', 'AuthController@signup');
-  
+    Route::get('supporter_list','SupporterController@getOnlineList');
     Route::group([
       'middleware' => 'auth:api'
     ], function() {

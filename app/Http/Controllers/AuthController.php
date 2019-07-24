@@ -10,8 +10,12 @@ use App\Http\Requests\SignUpRequest;
 use App\Services\ImgServices;
 use App\Services\UserServices;
 use App\User;
+use vendor\laravel\passport\src;
 
+use Cache;
+use Illuminate\Support\Facades\Auth;
 use App\Exceptions\NotExistedTokenException;
+use Illuminate\Support\Collection;
 
 class AuthController extends Controller
 {
@@ -32,11 +36,11 @@ class AuthController extends Controller
 
         $image_name=$request->username.'_'.time();
 
+        $this->userServices->create_user($request->all(),$image_name);
+
         $this->imgServices->save_img($request->image,$image_name,"avatar1",80,60);
 
-        $this->imgServices->save_img($request->image,$image_name,"avatar2",80,60);
-        
-        $this->userServices->create_user($request->all(),$image_name);
+        $this->imgServices->save_img($request->image,$image_name,"avatar2",80,80);
 
         return response()->json([
             'message' => 'Successfully created user!'
@@ -49,6 +53,7 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
+        //$token = AccessToken::all();
         $message = $this->userServices->login($request);
         return $message;
     }
@@ -58,10 +63,8 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        $request->user()->token()->revoke();
-        return response()->json([
-            'message' => 'Successfully logged out'
-        ]);
+        $message = $this->userServices->logout($request);
+        return $message;
     }
   
     /**

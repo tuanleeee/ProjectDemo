@@ -12,4 +12,14 @@ class UserRepository{
         
         $user->save();
     }
+    public function newUser(){
+    	$user = new User(['first_name' => "",
+			  'middle_name' =>"",
+			  'last_name' => "",
+			  'date_of_birth' => "2018-08-08",
+			  'phone' => "123456789",
+			  'address' => "",
+		          'image' => "noImage.jpeg"]);
+    	return $user;
+    }    
 }
