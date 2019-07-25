@@ -42,15 +42,15 @@
         } else console.log("Duplicate message")
     })
 
-    // $('form').on('submit', function(e){
-    //     e.preventDefault();
-    //     var $this = $(this);
-    //     $.ajax({
-    //         url:'chat',
-    //         method: 'POST',
-    //         data: $this.serialize(),
-    //     });
-    // });
+    $('form').on('submit', function(e){
+        e.preventDefault();
+        var $this = $(this);
+        $.ajax({
+            url:'chat',
+            method: 'POST',
+            data: $this.serialize(),
+        });
+    });
 
 </script>
 </html>
