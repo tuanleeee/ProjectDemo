@@ -9,7 +9,6 @@ class UserRepository{
         $collection = collect($data);
         $collection = $collection->filter();
         $user->fill($collection->all());
-        
         $user->save();
     }
     public function newUser(){

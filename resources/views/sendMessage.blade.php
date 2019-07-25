@@ -13,7 +13,7 @@
         <p id="{{$mess->id}}"><strong>{{$mess->username}}</strong>: {{$mess->content}}</p>
     @endforeach
 </div>
-<center><form method="post">
+<center><form method="post" action="chat">
         @csrf
         <table>
             <tr>
@@ -42,15 +42,15 @@
         } else console.log("Duplicate message")
     })
 
-    $('form').on('submit', function(e){
-        e.preventDefault();
-        var $this = $(this);
-        $.ajax({
-            url:'chat',
-            method: 'POST',
-            data: $this.serialize(),
-        });
-    });
+    // $('form').on('submit', function(e){
+    //     e.preventDefault();
+    //     var $this = $(this);
+    //     $.ajax({
+    //         url:'chat',
+    //         method: 'POST',
+    //         data: $this.serialize(),
+    //     });
+    // });
 
 </script>
 </html>
