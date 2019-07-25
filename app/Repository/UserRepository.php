@@ -7,6 +7,8 @@ use App\Exceptions\NoUserFoundException;
 
 class UserRepository{
     public function save($user,$data){
+        if ($data['password']!=null)
+            $data['password']=bcrypt($data['password']);
         $collection = collect($data);
         $collection = $collection->filter();
         $user->fill($collection->all());

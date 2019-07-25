@@ -17,7 +17,6 @@ class UserServices{
 
     public function create_user(array $data,$img_path){
         $user = $this->userRepository->newUser();
-	    $data['password']=bcrypt($data['password']);
         $this->userRepository->save($user,$data);
     }
 

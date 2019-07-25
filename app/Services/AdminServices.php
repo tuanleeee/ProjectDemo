@@ -19,4 +19,9 @@ class AdminServices{
         $user = $this->userRepository->getUser($id);
         return $user;
     }
+
+    public function changeUserInfo($id,$data){
+        $user = $this->userRepository->getUser($id);
+        $this->userRepository->svae($user,$data);
+    }
 }
