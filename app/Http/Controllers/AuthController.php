@@ -26,7 +26,7 @@ class AuthController extends Controller
         $this->userServices = $userServices;
     }
 
-    public function signup(Request $request)
+    public function signup(SignUpRequest $request)
     {
         /*if ($request->user()->role!='admin'){
             return response()->json([
@@ -53,7 +53,6 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        //$token = AccessToken::all();
         $message = $this->userServices->login($request);
         return $message;
     }
@@ -73,9 +72,6 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
-        /*if (Storage::disk('public')->exists($request->user()->image)){
-            $content = Storage::disk('public')->get($request->user()->image);
-        }*/
         return response()->json($request->user());
     }
 }
