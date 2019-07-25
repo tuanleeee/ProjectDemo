@@ -19,6 +19,6 @@ class AdminController extends Controller
     }
 
     public function changeInfo(Request $request){
-        $user = $this->adminServices->changeUserInfo($id,$request->all());
+        $user = $this->adminServices->changeUserInfo($request->all());
     }
 }
