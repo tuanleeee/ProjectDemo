@@ -34,4 +34,8 @@ class UserRepository{
         }
         return $user;
     }
+
+    public function getUserList(){
+        return User::paginate(1);
+    }
 }

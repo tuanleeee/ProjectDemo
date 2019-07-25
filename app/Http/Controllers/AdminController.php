@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\AdminServices;
+use App\Services\PagingServices;
 
 class AdminController extends Controller
 {
-    private $adminServices;
+    private $adminServices,$pagingServices;
 
-    public function __construct(AdminServices $adminServices){
+    public function __construct(AdminServices $adminServices,PagingServices $pagingServices){
         $this->adminServices = $adminServices;
+        $this->pagingServices = $pagingServices;
     }
 
     public function getUser($id){
@@ -19,6 +21,10 @@ class AdminController extends Controller
     }
 
     public function changeInfo(Request $request){
-        $user = $this->adminServices->changeUserInfo($id,$request->all());
+        $user = $this->adminServices->changeUserInfo($request->all());
+    }
+
+    public function getUserList(){
+        return $this->pagingServices->getUserList();
     }
 }

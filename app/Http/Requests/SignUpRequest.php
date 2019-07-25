@@ -32,7 +32,7 @@ class SignUpRequest extends FormRequest
             'first_name' => ['string','nullable'],
             'middle_name' => ['string','nullable'],
             'last_name' => ['string','nullable'],
-            'user_name' => ['string','required','unique:users'],
+            'username' => ['string','required','unique:users'],
 
             'date_of_birth' => ['date','nullable'],
             'image' => ['image','nullable'],

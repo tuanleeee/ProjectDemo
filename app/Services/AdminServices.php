@@ -20,7 +20,10 @@ class AdminServices{
         return $user;
     }
 
-    public function changeUserInfo($id,$data){
+    public function changeUserInfo($data){
+        $data['user_role'] = null;
+        $data['username'] = null;
+        $id = $data['id'];
         $user = $this->userRepository->getUser($id);
         $this->userRepository->svae($user,$data);
     }

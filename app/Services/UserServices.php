@@ -34,12 +34,12 @@ class UserServices{
         if ($request->remember_me)
             $token->expires_at = Carbon::now()->addWeeks(1);
         $token->save();
-        return response()->json([
+        return response()->json(["data"=>[
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse(
                 $tokenResult->token->expires_at
-            )->toDateTimeString()
+            )->toDateTimeString()],"msg"=>"successful","status"=>200
         ]);
     }
 

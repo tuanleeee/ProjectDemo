@@ -13,6 +13,7 @@ Route::group([
     Route::get('getUser/{id}','AdminController@getUser');
     Route::post('signup', 'AuthController@signup');
     Route::get('supporter_list','SupporterController@getOnlineList');
+    Route::get('getUserList','AdminController@getUserList');
     Route::group([
       'middleware' => 'auth:api'
     ], function() {
