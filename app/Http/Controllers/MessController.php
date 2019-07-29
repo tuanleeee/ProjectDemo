@@ -25,4 +25,8 @@ class MessController extends Controller
 //        return view('sendMessage');
     }
 
+    public function supporter () {
+        return view('supporterChat');
+    }
+
 }

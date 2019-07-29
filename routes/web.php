@@ -22,3 +22,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/chat', 'MessController@index' );
 
 Route::post('/chat', 'MessController@postMess');
+
+Route::get('/supporter', 'MessController@supporter');

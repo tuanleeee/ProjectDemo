@@ -34,7 +34,8 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
 <script>
     var socket = io('http://localhost:6001')
-    socket.on('laravel_database_chat:message', function (data) {
+    socket.on('laravel_database_private-customer', function (data) {
+        console.log('Id cuar socket nef: ' + socket.id)
         console.log('Hi Im in sendMess.blade')
         console.log(data)
         if ($('#'+ data.id).length == 0) {
