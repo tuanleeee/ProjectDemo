@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Laravel\Passport\Passport;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,10 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Passport::routes();
-        //access token expired
-        Passport::tokensExpireIn(now()->addMinutes(10));
-        Passport::refreshTokensExpireIn(now()->addMinutes(10));
-        Passport::personalAccessTokensExpireIn(now()->addMinutes(10));
+        //
     }
 }
