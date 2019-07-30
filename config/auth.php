@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'sysusers',
+        'passwords' => 'users',
     ],
 
     /*
@@ -38,12 +38,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'sysusers',
+            'provider' => 'users',
         ],
 
         'api' => [
-            'driver' => 'token',
-            'provider' => 'sysusers',
+            'driver' => 'passport',
+            'provider' => 'users',
             'hash' => false,
         ],
     ],
@@ -66,9 +66,9 @@ return [
     */
 
     'providers' => [
-        'sysusers' => [
+        'users' => [
             'driver' => 'eloquent',
-            'model' => App\Modules\AuthModule\Model\SysUser::class,
+            'model' => App\User::class,
         ],
 
         // 'users' => [
@@ -94,7 +94,7 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'sysusers',
+            'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
         ],
