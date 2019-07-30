@@ -42,7 +42,8 @@ class AuthController extends Controller
         $this->userServices = $userServices;
     }
 
-    public function getUser(Int $id): SysUser{
+    public function getUser(Int $id): JsonResponse{
+        //SysUser $user;
         $user=$this->adminServices->getUser($id);
         return $user;
     }
@@ -51,12 +52,16 @@ class AuthController extends Controller
         $user = $this->adminServices->changeUserInfo($request->all());
     }
 
-    public function getUserList(): array{
-        return $this->pagingServices->getUserList();
+    public function getUserList(): JsonResponse{
+        return response()->json([
+            'data' => $this->pagingServices->getUserList(),
+            'status' => 200,
+            'message' => 'Successful'
+        ]);
     }
 
-    public function signup(SignUpRequests $request){
-        //dd("fuck");
+    public function signup(SignUpRequests $request) : JsonResponse
+    {
 
         $image_name=$request->username.'_'.time();
 
@@ -65,8 +70,10 @@ class AuthController extends Controller
         $this->imgServices->save_img($request->image,$image_name);
 
         return response()->json([
-            'message' => 'Successfully created user!'
-        ], 201);
+            'data' => '',
+            'status' => 200,
+            'message' => 'Successful'
+        ]);
     }
   
     public function login(LoginRequest $request) : JsonResponse{
@@ -74,22 +81,27 @@ class AuthController extends Controller
         return $message;
     }
   
-    public function logout(Request $request): json{
+    public function logout(Request $request) : JsonResponse
+    {
         $message = $this->userServices->logout($request);
         return $message;
     }
   
-    public function user(Request $request)
+    public function user(Request $request) : JsonResponse
     {
         return response()->json($request->user());
     }
 
-    public function getOnlineList(): array{
-        $users = \App\User::all();
+    public function getOnlineList(): JsonResponse{
+        $users = \App\Modules\AuthModule\Model\sysUser::all();
         $online = collect();
         foreach($users as $user){
             if ($user->isOnline()) $online->push($user);
         }
-        return $online;
+        return response()->json([
+            'data' => $online,
+            'status' => '200',
+            'message' => 'successful'
+        ]);
     }
 }
