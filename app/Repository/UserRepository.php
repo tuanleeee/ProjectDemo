@@ -22,7 +22,7 @@ class UserRepository{
 			  'date_of_birth' => "2018-08-08",
 			  'phone' => "123456789",
 			  'address' => "",
-		          'image' => "noImage.jpeg"]);
+              'image' => "noImage.jpeg"]);
     	return $user;
     }
     
@@ -32,5 +32,9 @@ class UserRepository{
             throw new NoUserFoundException();
         }
         return $user;
+    }
+
+    public function getUserList(){
+        return User::paginate(1);
     }
 }

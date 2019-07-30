@@ -13,7 +13,7 @@ class changeInfoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,17 @@ class changeInfoRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'first_name' => ['string','nullable'],
+            'middle_name' => ['string','nullable'],
+            'last_name' => ['string','nullable'],
+            
+            'date_of_birth' => ['date','nullable'],
+            'image' => ['image','nullable'],
+
+            'gender' => [Rule::in(['male','female']),'required'],
+            'address' => ['string','nullable'],
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string|confirmed'
         ];
     }
 }

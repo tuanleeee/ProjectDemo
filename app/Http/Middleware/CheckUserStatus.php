@@ -18,10 +18,10 @@ class CheckUserStatus
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check()){
+        /*if (Auth::check()){
             $expireAt = Carbon::now()->addMinutes(1);
             Cache::put('user-is-online-' . Auth::user()->id,true,$expireAt);
-        }
+        }*/
         return $next($request);
     }
 }
