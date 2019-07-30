@@ -25,6 +25,6 @@ class AdminServices{
         $data['username'] = null;
         $id = $data['id'];
         $user = $this->userRepository->getUser($id);
-        $this->userRepository->svae($user,$data);
+        $this->userRepository->save($user,$data);
     }
 }
