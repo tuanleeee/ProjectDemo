@@ -177,7 +177,7 @@ return [
         Laravel\Passport\PassportServiceProvider::class,
 
         App\Modules\AuthModule\AuthServiceProvider::class,
-
+        App\Modules\ChatModule\ChatServiceProvider::class,
     ],
 
     /*
