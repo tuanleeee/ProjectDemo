@@ -28,10 +28,10 @@
         <input type="submit" value="Send">
     </form></center>
 </body>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+<script type="text/javascript"  src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
 <script>
-    var socket = io('http://localhost:6002')
+    var socket = io('http://localhost:6003')
     socket.on('laravel_database_chat:message', function (data) {
         console.log('A new customer just start a chat')
         console.log(data)

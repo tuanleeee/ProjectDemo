@@ -3,7 +3,7 @@
 namespace App\Modules\ChatModule\ChatController;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use App\Modules\ChatModule\Model\Messages;
 use App\Modules\ChatModule\Events\RedisEvent;
 

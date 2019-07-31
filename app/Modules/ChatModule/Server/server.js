@@ -1,5 +1,5 @@
-var io = require('socket.io')(6002);
-console.log('Connected to port 6002');
+var io = require('socket.io')(6003);
+console.log('Connected to port 6003');
 io.on('error', function (socket) {
     console.log('error')
 });
