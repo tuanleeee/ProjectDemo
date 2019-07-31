@@ -9,4 +9,10 @@ class Messages extends Model
     protected $table = "messages";
 
     protected $fillable = ['username', 'content'];
+
+    protected $attributes = array(
+        'username' => "",
+        'content' => "",
+        'request' => "Customer"
+    );
 }
