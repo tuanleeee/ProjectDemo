@@ -22,6 +22,7 @@ abstract class ModuleContract extends \Illuminate\Support\ServiceProvider{
         if (is_dir(__DIR__.'\\'.$module.'\\Migrations')) {
             $this->loadMigrationsFrom(__DIR__.'\\'.$module.'\\Migrations'); 
         }
+
         //dd(__DIR__.'\\'.$module.'\\Migrations');
     }
 }

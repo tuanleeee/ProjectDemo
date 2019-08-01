@@ -3,6 +3,7 @@ namespace App\Modules\AuthModule\Services;
 
 use App\Modules\AuthModule\Repository\SysUserRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class PagingServices
 {
@@ -13,8 +14,8 @@ class PagingServices
         $this->userRepository = $userRepository;
     }
 
-    public function getUserList() : LengthAwarePaginator{
+    public function getUserList() : Collection{
         $userList = $this->userRepository->getUserList();
-        return $userList;
+        return collect($userList);
     }
 }
