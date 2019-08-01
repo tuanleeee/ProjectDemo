@@ -2,9 +2,10 @@
 
 namespace App\Modules\AuthModule\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Modules\AuthModule\Contracts\RequestContract;
+use Illuminate\Validation\Rule;
 
-class ChangeInfoRequest extends FormRequest
+class ChangeInfoRequest extends RequestContract
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,10 +32,10 @@ class ChangeInfoRequest extends FormRequest
             'date_of_birth' => ['date','nullable'],
             'image' => ['image','nullable'],
 
-            'gender' => [Rule::in(['male','female']),'required'],
+            'gender' => [Rule::in(['male','female'])],
             'address' => ['string','nullable'],
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed'
+            'email' => 'string|email|unique:users',
+            'password' => 'string|confirmed',
         ];
     }
 }
