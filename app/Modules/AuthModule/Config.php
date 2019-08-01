@@ -31,5 +31,12 @@ return array(
         '459' => 'Invalid access token',
         '469' => 'Wrong username or password',
         '479' => 'Unauthorized'
+    ),
+
+    'online' => array(
+        'expired' => array(
+            'minutes' => 1,
+            'hours' => 0
+        )
     )
 );

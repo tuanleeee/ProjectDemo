@@ -27,7 +27,9 @@ class UserServices{
 
     private function setOnline(){
     
-        $expireAt = Carbon::now()->addMinutes(1);
+        $expireAt = Carbon::now()
+                    ->addMinutes(config('AuthModule_config.online.minutes'))
+                    ->addHours(config('AuthModule_config.online.hours'));
         Cache::put('user-is-online-' . Auth::user()->id,true,$expireAt);
     
     }
