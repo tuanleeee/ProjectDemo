@@ -3,8 +3,8 @@ namespace App\Modules\AuthModule\Repository;
 
 use App\Modules\AuthModule\Model\SysUser;
 use Illuminate\Support\Collection;
-use App\Exceptions\NoUserFoundException;
-use App\Exceptions\DatabaseErrorException;
+use App\Modules\AuthModule\Exceptions\NoUserFoundException;
+use App\Modules\AuthModule\Exceptions\DatabaseErrorException;
 
 class SysUserRepository{
     public function save(array $data,SysUser $user){
@@ -37,5 +37,9 @@ class SysUserRepository{
             else $userList->push([$user,'offline']);
         }
         return $userList;
+    }
+
+    public function delete(SysUser $user){
+        $user->forceDelete();
     }
 }

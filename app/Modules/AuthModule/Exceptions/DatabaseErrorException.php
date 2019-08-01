@@ -10,7 +10,7 @@ class DatabaseErrorException extends Exception
 {
     public function render() : JsonResponse{
         $response = new ResponseForm;
-        $response->setMessage("439","Database not ready or bad query");
+        $response->setMessage("439");
         return $response->getResponse();
     }
 }

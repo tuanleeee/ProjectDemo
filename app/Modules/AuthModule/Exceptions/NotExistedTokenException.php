@@ -11,7 +11,7 @@ class NotExistedTokenException extends Exception
 {
     public function render() : JsonResponse{
         $response = new ResponseForm;
-        $response->setMessage("459","Invalid access token");
+        $response->setMessage("459");
         return $response->getResponse();
     }
 }

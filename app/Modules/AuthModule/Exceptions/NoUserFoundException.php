@@ -10,7 +10,7 @@ class NoUserFoundException extends Exception
 {
     public function render(){
         $response = new ResponseForm();
-        $response->setMessage("449","No user found");
+        $response->setMessage("449");
         return $response->getResponse();
     }
 }

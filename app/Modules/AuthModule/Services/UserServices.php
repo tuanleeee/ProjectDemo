@@ -40,7 +40,7 @@ class UserServices{
             throw new FailLoginException();
         $user = $request->user();
 
-        $tokenResult = $user->createToken('Secret key');
+        $tokenResult = $user->createToken(config('AuthModule_config.token.key'));
         $token = $tokenResult->token;
         $this->setOnline();
         $token->save();
@@ -93,5 +93,12 @@ class UserServices{
         $paginatedItems= new LengthAwarePaginator($currentPageItems , count($userList), $perPage);
         $paginatedItems->setPath($path);
         return $paginatedItems;
+    }
+
+    public function delete($id){
+
+        $user = $this->userRepository->getUser($id);
+
+        $this->userRepository->delete($user);
     }
 }

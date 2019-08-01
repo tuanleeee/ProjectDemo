@@ -12,16 +12,21 @@ class ResponseForm{
     public function __construct(){
         $this->data = new Collection;
         $this->status = "200";
-        $this->message = "Successful";
+        $this->message = config('AuthModule_config.message.200');
     }
 
     public function addData(Collection $data){
         $this->data = $this->data->merge($data);
     }
 
-    public function setMessage(string $status,string $message){
+    /*public function setMessage(string $status,string $message){
         $this->status = $status;
         $this->message = $message; 
+    }*/
+
+    public function setMessage(string $status){
+        $this->status = $status;
+        $this->message = config('AuthModule_config.message.'.$status);
     }
 
     public function getResponse() : JsonResponse{
