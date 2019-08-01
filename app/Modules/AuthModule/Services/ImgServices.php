@@ -1,15 +1,13 @@
 <?php
 namespace App\Modules\AuthModule\Services;
 
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class ImgServices
 {
-    public function save_img($image,$image_name){
-
+    public function save_img(Image $image,String $image_name){
         if ($image == null) return;
-        $image_path = $image->storeAs('public/image/',$image_name.".jpeg");
+        $image->storeAs(config('AuthModule_config.image.location'),$image_name.config('AuthModule_config.image.file_type'));
         $image->save();
     }
 }

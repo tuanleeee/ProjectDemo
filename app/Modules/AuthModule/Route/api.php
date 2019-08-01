@@ -14,8 +14,7 @@ Route::group([
 ], function () {
     Route::get('getUser/{id}','AuthController@getUser');
     Route::post('signUp', 'AuthController@signup');
-    Route::get('supporterList','AuthController@getOnlineList');
-    Route::get('getUserList','AuthController@getUserList');
+    Route::get('getSupporterList','AuthController@getSupporterList');
     Route::group([
       'middleware' => 'auth:api'
     ], function() {
@@ -34,11 +33,10 @@ Route::group([
     'prefix'=>'auth'],
     function(){
         Route::post('login','AuthController@login');
-
         Route::group([
            'middleware' => 'auth:api'
          ],function(){
-             Route::get('logout','AuthController@logout');
-           });
+            Route::get('logout','AuthController@logout');
+        });
     }
 );

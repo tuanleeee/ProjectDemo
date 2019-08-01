@@ -1,8 +1,8 @@
 <?php
 namespace App\Modules\AuthModule\Services;
 
-use Illuminate\Http\JsonResponse;
-use App\Modules\AuthModule\Model\SysUser;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Modules\AuthModule\Repository\SysUserRepository;
 use App\Modules\AuthModule\Exceptions\FailLoginException;
 
@@ -18,8 +18,7 @@ class UserServices{
     }
 
     public function create_user(array $data,$img_path){
-        $user = $this->userRepository->newUser();
-        $this->userRepository->save($user,$data);
+        $this->userRepository->save($data);
     }
 
     /**
@@ -27,38 +26,57 @@ class UserServices{
      * 
      */
 
-    private function setOnline(SysUser $user){
+    private function setOnline(){
         $expireAt = Carbon::now()->addMinutes(1);
         Cache::put('user-is-online-' . Auth::user()->id,true,$expireAt);
     }
 
-    public function login($request) : JsonResponse{
+    public function login($request) : Collection{
         $credentials = request(['username', 'password']);
         if(!Auth::attempt($credentials))
             throw new FailLoginException();
         $user = $request->user();
+
         $tokenResult = $user->createToken('Secret key');
         $token = $tokenResult->token;
-        
-        $this->setOnline($user);
-
-        if ($request->remember_me)
-            $token->expires_at = Carbon::now()->addWeeks(1);
+        $this->setOnline();
         $token->save();
-        return response()->json(["data"=>[
+        
+        return collect([
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse(
                 $tokenResult->token->expires_at
-            )->toDateTimeString()],"msg"=>"successful","status"=>200
+            )->toDateTimeString()
         ]);
     }
 
     public function logout($request){
         $request->user()->token()->revoke();
         Cache::pull('user-is-online-' . Auth::user()->id);
-        return response()->json([
-            'message' => 'Successfully logged out'
-        ]); 
+    }
+
+    public function getUser(Int $id): Collection{
+        $user = $this->userRepository->getUser($id);
+        return collect($user);
+    }
+
+    public function changeUserInfo($data){
+        $data['user_role'] = null;
+        $data['username'] = null;
+        $id = $data['id'];
+        $user = $this->userRepository->getUser($id);
+        $this->userRepository->save($user,$data);
+    }
+
+    public function getSupporterList(string $path) : LengthAwarePaginator{
+        $userList = $this->userRepository->getSupporterList();
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $perPage = config('AuthModule_config.pagination.items_per_page');
+        $currentPageItems = $userList->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+
+        $paginatedItems= new LengthAwarePaginator($currentPageItems , count($userList), $perPage);
+        $paginatedItems->setPath($path);
+        return $paginatedItems;
     }
 }

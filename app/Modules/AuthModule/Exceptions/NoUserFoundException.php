@@ -3,12 +3,14 @@
 namespace App\Modules\AuthModule\Exceptions;
 
 use Exception;
+use Illuminate\Http\JsonResponse;
+use App\Modules\AuthModule\Services\ResponseForm;
 
 class NoUserFoundException extends Exception
 {
     public function render(){
-        return response()->json([
-            'message' => 'no user assocciated with input id'
-        ], 401);
+        $response = new ResponseForm();
+        $response->setMessage("449","No user found");
+        return $response->getResponse();
     }
 }
