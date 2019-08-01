@@ -9,4 +9,8 @@ class ChatServices {
     public function saveMess(Request $request)  {
         return Messages::create($request->all());
     }
+
+    public function getAllMess() {
+        return Messages::all();
+    }
 }
