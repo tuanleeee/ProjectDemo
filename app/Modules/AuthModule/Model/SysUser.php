@@ -3,12 +3,9 @@
 namespace App\Modules\AuthModule\Model;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Cache;
-use Carbon\Carbon;
-
 
 class SysUser extends Authenticatable
 {

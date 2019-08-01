@@ -4,26 +4,16 @@ namespace App\Modules\AuthModule\Controller;
 
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-
 use App\Http\Controllers\Controller;
-use App\Modules\AuthModule\Model\SysUser;
-
 use App\Modules\AuthModule\Services\ResponseForm;
 use App\Modules\AuthModule\Services\PagingServices;
+
 use App\Modules\AuthModule\Services\UserServices;
 use App\Modules\AuthModule\Services\ImgServices;
-
 use App\Modules\AuthModule\Requests\LoginRequest;
 use App\Modules\AuthModule\Requests\SignUpRequests;
 
-use App\Modules\AuthModule\Exceptions\NotExistedTokenException;
-
-use Cache;
-use vendor\laravel\passport\src;
 use Illuminate\Http\JsonResponse;
-
-use Illuminate\Support\Facades\Auth;
 
 
 class AuthController extends Controller
@@ -52,7 +42,7 @@ class AuthController extends Controller
 
 
     public function changeInfo(Request $request){
-        $user = $this->userServices->changeUserInfo($request->all());
+        $this->userServices->changeUserInfo($request->all());
     }
 
 
@@ -61,11 +51,8 @@ class AuthController extends Controller
     {
 
         $image_name=$request->username.'_'.time();
-
         $this->userServices->create_user($request->all(),$image_name);
-
         $this->imgServices->save_img($request->image,$image_name);
-
         $response = new ResponseForm();
 
         return $response->getResponse();
@@ -96,9 +83,9 @@ class AuthController extends Controller
 
 
   
-    public function user(Request $request) : JsonResponse
+    public function user() : JsonResponse
     {
-        $reponse = new ResponseForm();
+        $response = new ResponseForm();
 
         return $response->getResponse();
     }

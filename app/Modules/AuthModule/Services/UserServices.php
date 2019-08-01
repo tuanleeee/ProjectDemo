@@ -1,9 +1,7 @@
 <?php
 namespace App\Modules\AuthModule\Services;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
-use App\Modules\AuthModule\Model\SysUser;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Modules\AuthModule\Repository\SysUserRepository;
 use App\Modules\AuthModule\Exceptions\FailLoginException;
@@ -28,7 +26,7 @@ class UserServices{
      * 
      */
 
-    private function setOnline(SysUser $user){
+    private function setOnline(){
         $expireAt = Carbon::now()->addMinutes(1);
         Cache::put('user-is-online-' . Auth::user()->id,true,$expireAt);
     }
@@ -38,11 +36,10 @@ class UserServices{
         if(!Auth::attempt($credentials))
             throw new FailLoginException();
         $user = $request->user();
+
         $tokenResult = $user->createToken('Secret key');
         $token = $tokenResult->token;
-        
-        $this->setOnline($user);
-
+        $this->setOnline();
         $token->save();
         
         return collect([
@@ -74,17 +71,12 @@ class UserServices{
 
     public function getSupporterList(string $path) : LengthAwarePaginator{
         $userList = $this->userRepository->getSupporterList();
-
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
-
-        $perPage = 1;
-
+        $perPage = config('AuthModule_config.pagination.items_per_page');
         $currentPageItems = $userList->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
 
         $paginatedItems= new LengthAwarePaginator($currentPageItems , count($userList), $perPage);
-
         $paginatedItems->setPath($path);
-        
         return $paginatedItems;
     }
 }

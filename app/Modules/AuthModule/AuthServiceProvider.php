@@ -13,6 +13,7 @@ class AuthServiceProvider extends  ModuleContract{
     
     public function boot(){
         $this->discover();
+
         $this->app->bind('App\FailValidationInterface','App\Modules\AuthModule\FailValidator\FailValidator');
     }
     public function register(){

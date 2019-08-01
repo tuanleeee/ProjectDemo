@@ -16,11 +16,15 @@ abstract class ModuleContract extends \Illuminate\Support\ServiceProvider{
         }
 
         if(is_dir(__DIR__.'\\'.$module.'\\Views')) {
-            $this->loadViewsFrom(__DIR__.'\\'.$module.'\\Views',$module);
+            $this->loadViewsFrom(__DIR__.'\\'.$module.'\\Views',$module.'_view');
         }
 
         if (is_dir(__DIR__.'\\'.$module.'\\Migrations')) {
             $this->loadMigrationsFrom(__DIR__.'\\'.$module.'\\Migrations'); 
+        }
+
+        if (file_exists(__DIR__.'\\'.$module.'\\Config.php')) {
+            $this->mergeConfigFrom(__DIR__.'\\'.$module.'\\Config.php',$module.'_config');
         }
 
         //dd(__DIR__.'\\'.$module.'\\Migrations');
