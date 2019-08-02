@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCustomersTable extends Migration
+class AddRequestToMessages extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('customer_name');
-            $table->string('customer_email');
-            $table->timestamps();
+        Schema::table('messages', function (Blueprint $table) {
+            $table->string('request');
         });
     }
 
@@ -28,6 +25,8 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::table('messages', function (Blueprint $table) {
+            $table->dropColumn('request');
+        });
     }
 }
