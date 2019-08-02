@@ -35,7 +35,7 @@ class SignUpRequests extends RequestContract
 
             'gender' => [Rule::in(['male','female']),'required'],
             'user_role' => [Rule::in(['admin','supporter']),'required'],
-            
+            'phone' => ['numeric'],
             'address' => ['string','nullable'],
             'email' => 'required|string|email|unique:sysUsers',
             'password' => 'required|string|confirmed'
