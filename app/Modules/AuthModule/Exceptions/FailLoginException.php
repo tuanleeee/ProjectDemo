@@ -10,7 +10,7 @@ class FailLoginException extends Exception
 {
     public function render() : JsonResponse{
         $response = new ResponseForm;
-        $response->setMessage("469","Wrong username or password");
+        $response->setMessage("469");
         return $response->getResponse();
     }
 }

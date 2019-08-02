@@ -17,7 +17,7 @@ class ChatController extends Controller {
 
     public function index() {
         $messages = $this->chatServices->getAllMess();
-        return view('ChatModule::chat', compact('messages'));
+        return view('ChatModule_view::chat', compact('messages'));
     }
 
     public function postMess(Request $request) {
@@ -29,6 +29,7 @@ class ChatController extends Controller {
     }
 
     public function supporter(Request $resquest) {
-        return view('ChatModule::supporter');
+        $value = config('ChatModule_config.system.enable');
+        return view('ChatModule_view::supporter', compact('value'));
     }
 }
