@@ -9,6 +9,7 @@ use App\Modules\AuthModule\Exceptions\FailLoginException;
 use Cache;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Modules\AuthModule\Model\SysUser;
 
 class UserServices{
     private $userRepository; 
@@ -17,21 +18,23 @@ class UserServices{
         $this->userRepository = $userRepository;
     }
 
+
     public function create_user(array $data,$img_path){
-        $this->userRepository->save($data);
+        $user = new SysUser();
+        $this->userRepository->save($data,$user);
     }
 
-    /**
-     * Methods use by login
-     * 
-     */
 
     private function setOnline(){
+    
         $expireAt = Carbon::now()->addMinutes(1);
         Cache::put('user-is-online-' . Auth::user()->id,true,$expireAt);
+    
     }
 
+
     public function login($request) : Collection{
+    
         $credentials = request(['username', 'password']);
         if(!Auth::attempt($credentials))
             throw new FailLoginException();
@@ -49,27 +52,39 @@ class UserServices{
                 $tokenResult->token->expires_at
             )->toDateTimeString()
         ]);
+    
     }
 
     public function logout($request){
+    
         $request->user()->token()->revoke();
         Cache::pull('user-is-online-' . Auth::user()->id);
+    
     }
 
+    
     public function getUser(Int $id): Collection{
+    
         $user = $this->userRepository->getUser($id);
         return collect($user);
+    
     }
 
+    
     public function changeUserInfo($data){
+        
         $data['user_role'] = null;
         $data['username'] = null;
-        $id = $data['id'];
+        $id =  auth('api')->user()->id;
         $user = $this->userRepository->getUser($id);
-        $this->userRepository->save($user,$data);
+        
+        $this->userRepository->save($data,$user);
+    
     }
 
+    
     public function getSupporterList(string $path) : LengthAwarePaginator{
+
         $userList = $this->userRepository->getSupporterList();
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         $perPage = config('AuthModule_config.pagination.items_per_page');

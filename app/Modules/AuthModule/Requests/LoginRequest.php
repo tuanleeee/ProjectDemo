@@ -2,9 +2,9 @@
 
 namespace App\Modules\AuthModule\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Modules\AuthModule\Contracts\RequestContract;
 
-class LoginRequest extends FormRequest
+class LoginRequest extends RequestContract
 {
     /**
      * Determine if the user is authorized to make this request.

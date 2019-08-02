@@ -19,7 +19,9 @@ Route::group([
       'middleware' => 'auth:api'
     ], function() {
         
+        Route::post('changeUserInfo','AuthController@changeUserInfo');
         Route::get('userInfo', 'AuthController@user');
+    
     });
 });
 

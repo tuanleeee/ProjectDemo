@@ -9,8 +9,8 @@ abstract class ModuleContract extends \Illuminate\Support\ServiceProvider{
     protected $module; //string
 
     public function discover(){
+        
         $module = $this->module;
-
         if(file_exists(__DIR__.'\\'.$module.'\\Route\\api.php')) {
             include __DIR__.'\\'.$module.'\\Route\\api.php';
         }
@@ -23,10 +23,9 @@ abstract class ModuleContract extends \Illuminate\Support\ServiceProvider{
             $this->loadMigrationsFrom(__DIR__.'\\'.$module.'\\Migrations'); 
         }
 
-        if (file_exists(__DIR__.'\\'.$module.'\\Config.php')) {
+        /*if (file_exists(__DIR__.'\\'.$module.'\\Config.php')) {
             $this->mergeConfigFrom(__DIR__.'\\'.$module.'\\Config.php',$module.'_config');
-        }
-
-        //dd(__DIR__.'\\'.$module.'\\Migrations');
+        }*/
+    
     }
 }

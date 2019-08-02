@@ -2,18 +2,16 @@
 namespace App\Modules\AuthModule\Repository;
 
 use App\Modules\AuthModule\Model\SysUser;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use App\Exceptions\NoUserFoundException;
 use App\Exceptions\DatabaseErrorException;
 
 class SysUserRepository{
-    public function save($data){
-        if ($data['password']!=null)
+    public function save(array $data,SysUser $user){
+        if (array_key_exists('password',$data))
             $data['password']=bcrypt($data['password']);
         $collection = collect($data);
         $collection = $collection->filter();
-        $user = new SysUser();
         $user->fill($collection->all());
         if (!$user->save()){
             throw new DatabaseErrorException();
@@ -27,10 +25,6 @@ class SysUserRepository{
             throw new NoUserFoundException();
         }
         return $user;
-    }
-    //Delete this pls :)
-    public function getUserList() : LengthAwarePaginator{
-        return SysUser::paginate(1);
     }
 
     //Get support list and status
