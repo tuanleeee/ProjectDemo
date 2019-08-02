@@ -15,8 +15,8 @@ abstract class ModuleContract extends \Illuminate\Support\ServiceProvider{
             include __DIR__.'\\'.$module.'\\Route\\api.php';
         }
 
-        if(is_dir(__DIR__.'\\'.$module.'\\Views')) {
-            $this->loadViewsFrom(__DIR__.'\\'.$module.'\\Views',$module.'_view');
+        if(is_dir(__DIR__.'\\'.$module.'\\views')) {
+            $this->loadViewsFrom(__DIR__.'\\'.$module.'\\views',$module.'_view');
         }
 
         if (is_dir(__DIR__.'\\'.$module.'\\Migrations')) {
