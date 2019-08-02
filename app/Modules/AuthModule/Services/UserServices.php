@@ -27,7 +27,9 @@ class UserServices{
 
     private function setOnline(){
     
-        $expireAt = Carbon::now()->addMinutes(1);
+        $expireAt = Carbon::now()
+                    ->addMinutes(config('AuthModule_config.online.minutes'))
+                    ->addHours(config('AuthModule_config.online.hours'));
         Cache::put('user-is-online-' . Auth::user()->id,true,$expireAt);
     
     }
@@ -40,7 +42,7 @@ class UserServices{
             throw new FailLoginException();
         $user = $request->user();
 
-        $tokenResult = $user->createToken('Secret key');
+        $tokenResult = $user->createToken(config('AuthModule_config.token.key'));
         $token = $tokenResult->token;
         $this->setOnline();
         $token->save();
@@ -93,5 +95,12 @@ class UserServices{
         $paginatedItems= new LengthAwarePaginator($currentPageItems , count($userList), $perPage);
         $paginatedItems->setPath($path);
         return $paginatedItems;
+    }
+
+    public function delete($id){
+
+        $user = $this->userRepository->getUser($id);
+
+        $this->userRepository->delete($user);
     }
 }

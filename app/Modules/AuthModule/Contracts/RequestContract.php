@@ -2,7 +2,7 @@
 
 namespace App\Modules\AuthModule\Contracts;
 
-use App\FailValidationInterface;
+use App\Modules\AuthModule\Contracts\FailValidationInterface;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 

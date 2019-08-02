@@ -106,4 +106,12 @@ class AuthController extends Controller
 
         return $response->getResponse();
     }
+
+    public function delete(Request $request): JsonResponse{
+        $response = new ResponseForm();
+        
+        $this->userServices->delete($request->userID);
+
+        return $response->getResponse();
+    }
 }

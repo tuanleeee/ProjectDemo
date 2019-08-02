@@ -1,5 +1,5 @@
 <?php
-namespace App\Modules\AuthModules\Contracts;
+namespace App\Modules\AuthModule\Contracts;
 
 use Illuminate\Validation\Validator;
 
