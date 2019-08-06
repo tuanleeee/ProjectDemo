@@ -25,6 +25,7 @@ class ChatController extends Controller {
         event(
             $e = new RedisEvent($messages)
         );
+	dd('Im in chat controller');
         return redirect('chat');
     }
 

@@ -11,7 +11,7 @@ class SysUser extends Authenticatable
 {
     use Notifiable,HasApiTokens;
 
-    protected $table = 'sysusers';
+    protected $table = 'sysUsers';
     
     protected $fillable = [
         'first_name','middle_name','last_name','date_of_birth','gender','phone','email','address','username','password','user_role','image'

@@ -12,7 +12,8 @@ class ChatServiceProvider extends ModuleContract {
 
     public function boot() {
         $this->discover();
-        $this->mergeConfigFrom(__DIR__.'\\Config\\config.php',$this->module.'_config');
+	if (file_exists(__DIR__.'/Config.php')) {
+       	 $this->mergeConfigFrom(__DIR__.'/Config/config.php',$this->module.'_config');}
     }
     public function register() {}
 }

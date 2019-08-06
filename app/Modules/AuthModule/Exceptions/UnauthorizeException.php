@@ -8,8 +8,8 @@ use App\Modules\AuthModule\Services\ResponseForm;
 
 class UnauthorizedException extends Exception
 {
-    public function render(){
-        $response = new ResponseForm;
+    public function render():JsonResponse{
+	$response = new ResponseForm;
         $response->setMessage("479");
         return $response->getResponse();
     }

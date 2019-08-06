@@ -34,6 +34,7 @@ class RedisEvent implements ShouldBroadcast
     public function broadcastOn()
     {
 //        return new PrivateChannel('channel-name');
+	  dd('Im in Event Broadcast on');
           return ['chat'];
     }
 

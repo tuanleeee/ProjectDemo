@@ -30,7 +30,7 @@ class SysUserRepository{
     //Get support list and status
 
     public function getSupporterList() : Collection{
-        $users = \App\Modules\AuthModule\Model\sysUser::all();
+        $users = \App\Modules\AuthModule\Model\SysUser::all();
         $userList = collect();
         foreach($users as $user){
             if ($user->isOnline()) $userList->push([$user,'online']);

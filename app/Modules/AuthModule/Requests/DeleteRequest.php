@@ -5,7 +5,7 @@ namespace App\Modules\AuthModule\Requests;
 use App\Modules\AuthModule\Contracts\RequestContract;
 use Illuminate\Validation\UnauthorizedException;
 
-class LoginRequest extends RequestContract
+class DeleteRequest extends RequestContract
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,8 +14,6 @@ class LoginRequest extends RequestContract
      */
     public function authorize()
     {
-        if (auth('api')->user->role == 'supporter')
-            throw new UnauthorizedException();
         return true;
     }
 

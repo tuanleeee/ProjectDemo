@@ -11,9 +11,12 @@ use App\Modules\AuthModule\Services\UserServices;
 use App\Modules\AuthModule\Services\ImgServices;
 use App\Modules\AuthModule\Requests\LoginRequest;
 use App\Modules\AuthModule\Requests\SignUpRequests;
+use App\Modules\AuthModule\Requests\DeleteRequest;
 
 use App\Modules\AuthModule\Requests\ChangeInfoRequest;
 use Illuminate\Http\JsonResponse;
+use App\Modules\AuthModule\Exceptions\UnauthorizedException;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -53,7 +56,8 @@ class AuthController extends Controller
 
         $image_name=$request->username.'_'.time();
         $this->userServices->create_user($request->all(),$image_name);
-        $this->imgServices->save_img($request->image,$image_name);
+	if ($request->image!=null)       
+		$this->imgServices->save_img($request->image,$image_name);
         $response = new ResponseForm();
 
         return $response->getResponse();
@@ -107,8 +111,11 @@ class AuthController extends Controller
         return $response->getResponse();
     }
 
-    public function delete(Request $request): JsonResponse{
-        $response = new ResponseForm();
+    public function delete(DeleteRequest $request): JsonResponse{
+	$response = new ResponseForm();
+	$user = auth('api')->user(); 
+	if ($user->user_role =='supporter')
+	    throw new UnauthorizedException();
         
         $this->userServices->delete($request->userID);
 
